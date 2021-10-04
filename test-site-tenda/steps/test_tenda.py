@@ -1,64 +1,132 @@
 import pymsgbox
 from behave import *
 from selenium import webdriver
-from page import func_page, tenda_page
 from time import sleep
 import unittest
+import pyautogui
 
-driver = webdriver.Chrome()
-url = 'https://www.tenda.com/'
+class Fuctions_Page:
+    # Funções para interação automatica na page da tenda
 
-@given(u'acesso a página inicial da Tenda')
-def step_impl(context):
-    driver.implicitly_wait(30)
-    driver.maximize_window()
+    def filtrar(self, driver):
+        filtrar = driver.find_element_by_id('ButtonFiltroSuperior')
+        filtrar.click()
 
-    driver.get(url)
-    func_page.close_msg(driver)
+    def aba_aptos(self, driver):
+        aba = driver.find_element_by_css_selector('#menu-header > div > div.container-header.h-100 > div > '
+                                                  'div.col-sm-2.col-md-2.col-lg-10.col-2.h-100.menu-desk.d-none-mobile'
+                                                  ' > div > nav > ul > li.sub_menu_imoveis_a_venda.ico_menu > a > h2')
+        aba.click()
 
+    def close_msg(self, driver):
+        msg = driver.find_element_by_css_selector('#selecione_geolocalizacao > div > ul > li.selectstate_no')
+        msg.click()
 
-@given(u'clico na aba de apartamentos')
-def step_impl(context):
-    func_page.aba_aptos(driver)
-    func_page.rolling(1907, 220, -750)
+    def close_cookie(self, driver):
+        close_cookie = driver.find_element_by_css_selector('#resultado-busca-novo > section.cookie > div.botoes > div')
+        close_cookie.click()
 
+    def rolling(self, Xscreen=0, Yscreen=0, roll=0):
+        pyautogui.click(Xscreen, Yscreen)
+        pyautogui.vscroll(roll)
 
-@given(u'coloco as preferências de filtro')
-def step_impl(context):
-    tenda_page.estado(driver)
-    tenda_page.estado_sp(driver)
-    sleep(10)
-    tenda_page.cidade(driver)
-    tenda_page.cidade_sp(driver)
-    tenda_page.bairro(driver)
-    tenda_page.bairro_barra_funda(driver)
-    tenda_page.obra(driver)
-    tenda_page.todos_obra(driver)
-    tenda_page.renda(driver)
-    tenda_page.todos_renda(driver)
+    def screenshot(self):
+        im = pyautogui.screenshot()
+        im.save('./results/screenshot.png')
 
+class Tenda_Page:
+    # Biblioteca de elementos da page da Tenda
 
-@when(u'clico no botão de filtrar')
-def step_impl(context):
-    func_page.filtrar(driver)
-    func_page.rolling(1907, 220, -1100)
+    def estado(self, driver):
+        estado = driver.find_element_by_id('Estados_Filtro_Superior')
+        estado.click()
 
-@then(u'devo visualizar os resultados')
-def step_impl(context):
-    Test_Site().test_title()
-    func_page.screenshot()
-    sleep(3)
-    driver.close()
+    def estado_sp(self, driver):
+        sp = driver.find_element_by_css_selector('#Estados_Filtro_Superior > li:nth-child(11)')
+        sp.click()
 
+    def cidade(self, driver):
+        cidade = driver.find_element_by_id('Cidades_Filtro_Superior')
+        cidade.click()
+
+    def cidade_sp(self, driver):
+        cidade_sp = driver.find_element_by_css_selector('#Cidades_Filtro_Superior > li:nth-child(3)')
+        cidade_sp.click()
+
+    def bairro(self, driver):
+        bairro = driver.find_element_by_id('Bairros_Filtro_Superior')
+        bairro.click()
+
+    def bairro_barra_funda(self, driver):
+        barra_funda = driver.find_element_by_css_selector('#Bairros_Filtro_Superior > li:nth-child(5)')
+        barra_funda.click()
+
+    def obra(self, driver):
+        obra = driver.find_element_by_id('EstagioObra_Filtro_Superior')
+        obra.click()
+
+    def todos_obra(self, driver):
+        todos_obra = driver.find_element_by_css_selector('#EstagioObra_Filtro_Superior > li:nth-child(2)')
+        todos_obra.click()
+
+    def renda(self, driver):
+        renda = driver.find_element_by_id('RendaFamiliar_Filtro_Superior')
+        renda.click()
+
+    def todos_renda(self, driver):
+        todos_renda = driver.find_element_by_css_selector('#RendaFamiliar_Filtro_Superior > li:nth-child(2)')
+        todos_renda.click()
 
 class Test_Site(unittest.TestCase):
 
-    def test_title(self):
+    def Start(self):
+        driver = webdriver.Chrome()
+        url = 'https://www.tenda.com/'
+
+        self.acess_Tenda(driver, url)
+        self.filter(driver)
+        self. test_title(driver)
+       #self.ScreenShot()
+        self.Close_Driver(driver)
+
+    def acess_Tenda(self, driver, url):
+        driver.implicitly_wait(30)
+        driver.maximize_window()
+
+        driver.get(url)
+        Fuctions_Page().close_msg(driver)
+
+        Fuctions_Page().aba_aptos(driver)
+        Fuctions_Page().rolling(1907, 220, -750)
+
+    def filter(self, driver):
+        Tenda_Page().estado(driver)
+        Tenda_Page().estado_sp(driver)
+        sleep(10)
+        Tenda_Page().cidade(driver)
+        Tenda_Page().cidade_sp(driver)
+        Tenda_Page().bairro(driver)
+        Tenda_Page().bairro_barra_funda(driver)
+        Tenda_Page().obra(driver)
+        Tenda_Page().todos_obra(driver)
+        Tenda_Page().renda(driver)
+        Tenda_Page().todos_renda(driver)
+
+    def test_title(self, driver):
         title_of_page = driver.title
 
         self.assertEqual(title_of_page, 'Apartamentos à venda com condições exclusivas | Tenda.com',
                          msg=pymsgbox.alert(f'Título correto!\n Título: {title_of_page}',
                                             'Teste Título', pymsgbox.OK_TEXT))
 
+    def ScreenShot(self):
+        Fuctions_Page().screenshot()
+
+    def Close_Driver(self, driver):
+        sleep(3)
+        driver.close()
+
     if __name__ == '__main__':
         unittest.main()
+
+Test_Site().Start()
