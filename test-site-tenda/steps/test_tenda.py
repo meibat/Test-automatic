@@ -46,7 +46,7 @@ def step_impl(context):
 @then(u'devo visualizar os resultados')
 def step_impl(context):
     Test_Site().test_title()
-    driver.save_screenshot('/results/screenshot.png')
+    func_page.screenshot()
     sleep(3)
     driver.close()
 

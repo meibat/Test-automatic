@@ -21,3 +21,7 @@ def close_cookie(driver):
 def rolling(Xscreen=0, Yscreen=0, roll=0):
     pyautogui.click(Xscreen, Yscreen)
     pyautogui.vscroll(roll)
+
+def screenshot():
+    im = pyautogui.screenshot()
+    im.save('./results/screenshot.png')
