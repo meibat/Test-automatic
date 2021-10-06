@@ -1,3 +1,5 @@
+#Programa para saber que ponto o mouse está
+
 import pyautogui
 from time import sleep
 
