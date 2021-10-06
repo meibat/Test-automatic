@@ -1,5 +1,4 @@
 import pymsgbox
-from behave import *
 from selenium import webdriver
 from time import sleep
 import unittest
@@ -78,6 +77,7 @@ class Tenda_Page:
         todos_renda.click()
 
 class Test_Site(unittest.TestCase):
+    #Interação automática
 
     def Start(self):
         driver = webdriver.Chrome()
@@ -85,8 +85,20 @@ class Test_Site(unittest.TestCase):
 
         self.acess_Tenda(driver, url)
         self.filter(driver)
-        self. test_title(driver)
-       #self.ScreenShot()
+
+    #Teste de Título
+        title_of_page = driver.title
+        self.assertEqual(title_of_page, 'Apartamentos à venda com condições exclusivas | Tenda.com',
+                         msg=pymsgbox.alert(f'Título correto!\nTítulo: {title_of_page}',
+                                            'Teste Título', pymsgbox.OK_TEXT))
+
+    #Teste de Pesquisa //AssertionError: <selenium.webdriver.remote.webelement.Web[96 chars]77")> != 'São Paulo' : OK
+        #query_result = driver.find_element_by_class_name('noPadding')
+
+        #self.assertEqual(query_result, 'São Paulo', msg=pymsgbox.alert(f'Pesquisa correta!\nQuery: {query_result}',
+        #                                                               'Teste Pesquisa', pymsgbox.OK_TEXT))
+
+        self.ScreenShot()
         self.Close_Driver(driver)
 
     def acess_Tenda(self, driver, url):
@@ -111,13 +123,9 @@ class Test_Site(unittest.TestCase):
         Tenda_Page().todos_obra(driver)
         Tenda_Page().renda(driver)
         Tenda_Page().todos_renda(driver)
-
-    def test_title(self, driver):
-        title_of_page = driver.title
-
-        self.assertEqual(title_of_page, 'Apartamentos à venda com condições exclusivas | Tenda.com',
-                         msg=pymsgbox.alert(f'Título correto!\n Título: {title_of_page}',
-                                            'Teste Título', pymsgbox.OK_TEXT))
+        Fuctions_Page().filtrar(driver)
+        Fuctions_Page().rolling(1907, 220, -1100)
+        Fuctions_Page().close_cookie(driver)
 
     def ScreenShot(self):
         Fuctions_Page().screenshot()
