@@ -3,7 +3,15 @@
 O programa test_tenda fazer uma pesquisa automatizada usando o filtro do site tenda.com e testa se o título do site está correto, 
 após o teste é tirado um screenshot da tela.
 
-## Test_Site
+
+## test-API-Zeus-nixsap 
+
+Faz o check da API e exibe a resposta do endpoint.
+
+        {rabbitOK: true}
+
+
+## test-site-tenda (Test_Site)
 
 Para a usar a barra de rolagem é usado o módulo pyautogui, ele automatiza o uso de recursos do sistema operacional.
 Se o programa não funcionar, pode ser que a resolução da tela esteja errada, para isso use o programa Resolutio_Screen para descobrir onde está 
