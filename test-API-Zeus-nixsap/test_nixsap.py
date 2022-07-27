@@ -5,7 +5,7 @@ headers = {
     'User-Agent': 'request',
 }
 
-url = 'http://zeusqa.tenda.com/nixsap/health/check'
+url = ''
 
 resposta = requests.get(url, headers=headers)
 
