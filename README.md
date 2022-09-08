@@ -1,5 +1,5 @@
 # Test-automatic
-Testes automatizados criados a partir do segundo desafio do meu estágio na Tenda.
+Testes automatizados.
 
 ### Criado em um sistema com requesitos:
  - Python 3.9.5
