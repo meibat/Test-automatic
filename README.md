@@ -12,12 +12,6 @@ Testes automatizados.
         # Faz a requesição para a API
         requests.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL')
 
-## test-API-Zeus-nixsap
-Faz o check da API e exibe a resposta do endpoint.
-
-        {rabbitOK: true}
-
-
 ## test-site-tenda
 O programa test_tenda.py faz uma pesquisa automatizada usando o filtro do site tenda.com e testa se o título do site está correto, 
 após o teste é tirado um screenshot da tela.
